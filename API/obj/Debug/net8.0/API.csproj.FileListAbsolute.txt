@@ -162,3 +162,8 @@ C:\Users\makro\OneDrive\Desktop\Reactivities\API\bin\Debug\net8.0\zh-Hans\Micros
 C:\Users\makro\OneDrive\Desktop\Reactivities\API\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\makro\OneDrive\Desktop\Reactivities\API\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\makro\OneDrive\Desktop\Reactivities\API\bin\Debug\net8.0\runtimes\linux-musl-s390x\native\libe_sqlite3.so
+C:\Users\makro\OneDrive\Desktop\Reactivities\api\obj\Debug\net8.0\API.sourcelink.json
+C:\Users\makro\OneDrive\Desktop\Reactivities\api\bin\Debug\net8.0\MediatR.dll
+C:\Users\makro\OneDrive\Desktop\Reactivities\api\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\Users\makro\OneDrive\Desktop\Reactivities\api\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\makro\OneDrive\Desktop\Reactivities\api\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
