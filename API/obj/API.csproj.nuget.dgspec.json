@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\API\\API.csproj": {}
+    "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\api\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\API\\API.csproj": {
+    "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\API\\API.csproj",
+        "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\api\\API.csproj",
         "packagesPath": "C:\\Users\\makro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\API\\obj\\",
+        "outputPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\makro\\AppData\\Roaming\\NuGet\\NuGet.Config"
