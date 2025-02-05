@@ -1,15 +1,19 @@
 import { Button, Form, Segment } from "semantic-ui-react";
 import { Activity } from "../model/activity";
 import { ChangeEvent, useState } from "react";
+import { useStore } from "../store/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    activity: Activity | undefined;
-    closeForm: () => void;
-    createOrEdit: (activity: Activity) => void;
-    submitting : boolean
-}
+export default observer (function ActivityForm() {
 
-export default function ActivityForm({ activity: selectedActivity, closeForm, createOrEdit , submitting }: Props) {
+    const  {activityStore} = useStore()
+
+
+
+    const {selectedActivity , closeForm , createActivity , updateActivity , loading} = activityStore
+ 
+    console.log(selectedActivity)
+
     const initialState: Activity = selectedActivity ?? {
         id: "",
         title: "",
@@ -23,8 +27,7 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
     const [activity, setActivity] =  useState<Activity>(initialState);
 
     const handleSubmit = () => {
-        createOrEdit(activity); // Ispravljeno
-        
+          activity.id ? updateActivity(activity) : createActivity(activity)
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,9 +44,9 @@ export default function ActivityForm({ activity: selectedActivity, closeForm, cr
                 <Form.Input placeholder="Date"  type="date" value={activity.date} name="date" onChange={handleInputChange} />
                 <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
                 <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
-                <Button loading={submitting} floated="right" positive type="submit" content="Submit" /> 
+                <Button loading={loading} floated="right" positive type="submit" content="Submit" /> 
                 <Button onClick={closeForm} floated="right" type="button" content="Cancel" /> {/* Ispravljeno */}
             </Form>   
         </Segment>
     );
-}
+})
