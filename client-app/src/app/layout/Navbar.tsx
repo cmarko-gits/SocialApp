@@ -2,6 +2,7 @@
 import { Button, Container, Menu } from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 import { useStore } from "../store/store";
+import { NavLink } from "react-router";
 
 export default function Navbar() {
 
@@ -10,13 +11,13 @@ export default function Navbar() {
     return (
         <Menu inverted fixed="top">
             <Container>
-                <Menu.Item header>
+                <Menu.Item as={NavLink} to='/' header>
                     <img src="/assets/logo.png" alt="Logo" style={{ marginRight: "10px" }} />
                     Reactivities
                 </Menu.Item>
-                <Menu.Item name="Activities" />
+                <Menu.Item as={NavLink} to='/activities' name="Activities" />
                 <Menu.Item>
-                    <Button onClick={()=>activityStore.openForm()} positive content="Create Activity" /> {/* Izmenjeno */}
+                    <Button as={NavLink} to='/createActivity' positive content="Create Activity" /> {/* Izmenjeno */}
                 </Menu.Item>
             </Container>
         </Menu>

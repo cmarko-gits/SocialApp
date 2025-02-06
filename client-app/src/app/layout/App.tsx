@@ -5,6 +5,8 @@ import ActivityDashboard from "./ActiviityDashboard";
 import LoadingComponent from "./LoadingComponent";
 import { useStore } from "../store/store";
 import { observer } from "mobx-react-lite";
+import { Outlet } from "react-router";
+import HomePage from "./home/HomePage";
 function App() {
   
     const  {activityStore} = useStore()
@@ -16,12 +18,24 @@ function App() {
     if(activityStore.loadingInitial) return <LoadingComponent content="Loading app" />
 
     return (
-      <Fragment>
-        <Navbar />
-          <Container style={{ marginTop: "7em" }}>
-            <ActivityDashboard/>
-          </Container>
-      </Fragment>
+      <>
+
+        {location.pathname === '/' ? <HomePage/>  : (
+
+            <>
+            
+
+                <Navbar />
+                <Container style={{marginTop:'7em'}}>
+                    <Outlet/>
+                </Container>
+            </>
+
+        )}
+
+      
+      </>
+      
     );
 }
 
