@@ -1,12 +1,12 @@
 import { Fragment, useEffect } from "react";
 import { Container } from "semantic-ui-react";
 import Navbar from "./Navbar";
-import ActivityDashboard from "./ActiviityDashboard";
+import ActivityDashboard from "../../features/activities/ActiviityDashboard";
 import LoadingComponent from "./LoadingComponent";
 import { useStore } from "../store/store";
 import { observer } from "mobx-react-lite";
 import { Outlet } from "react-router";
-import HomePage from "./home/HomePage";
+import HomePage from "../../features/home/HomePage";
 function App() {
   
     const  {activityStore} = useStore()
