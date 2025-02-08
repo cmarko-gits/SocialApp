@@ -5,17 +5,18 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Domain; // Proveri da li je ovo tačan namespace za Activity model
 using Persistence;
+using Application.Core;
 
 namespace Application.Activities
 {
     public class Details
     {
-        public class Query : IRequest<Activity>
+        public class Query : IRequest<Result<Activity>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Activity>
+        public class Handler : IRequestHandler<Query, Result<Activity>>
         {
             private readonly DataContext _context;
 
@@ -24,11 +25,12 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Activity> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Activity>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var activity = await _context.Activities.FindAsync(request.Id);
 
-                return activity ?? throw new Exception("Activity not found");
+            
+                return Result<Activity>.Success(activity);
             }
         }
     }

@@ -1,12 +1,12 @@
-import { Fragment, useEffect } from "react";
+import {  useEffect } from "react";
 import { Container } from "semantic-ui-react";
 import Navbar from "./Navbar";
-import ActivityDashboard from "../../features/activities/ActiviityDashboard";
 import LoadingComponent from "./LoadingComponent";
 import { useStore } from "../store/store";
 import { observer } from "mobx-react-lite";
 import { Outlet } from "react-router";
 import HomePage from "../../features/home/HomePage";
+import { ToastContainer } from "react-toastify";
 function App() {
   
     const  {activityStore} = useStore()
@@ -20,11 +20,12 @@ function App() {
     return (
       <>
 
+        <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+
         {location.pathname === '/' ? <HomePage/>  : (
 
             <>
-            
-
+      
                 <Navbar />
                 <Container style={{marginTop:'7em'}}>
                     <Outlet/>

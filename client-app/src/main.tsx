@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import 'react-toastify/ReactToastify.css'
 import './app/layout/styles.css';
 import React from 'react';
 import { store, StoreContext } from './app/store/store.ts';
