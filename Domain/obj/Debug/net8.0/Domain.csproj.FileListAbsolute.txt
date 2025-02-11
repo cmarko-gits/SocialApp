@@ -10,3 +10,4 @@ C:\Users\makro\OneDrive\Desktop\Reactivities\Domain\obj\Debug\net8.0\refint\Doma
 C:\Users\makro\OneDrive\Desktop\Reactivities\Domain\obj\Debug\net8.0\Domain.pdb
 C:\Users\makro\OneDrive\Desktop\Reactivities\Domain\obj\Debug\net8.0\ref\Domain.dll
 C:\Users\makro\OneDrive\Desktop\Reactivities\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+C:\Users\makro\OneDrive\Desktop\Reactivities\Domain\obj\Debug\net8.0\Domain.csproj.AssemblyReference.cache

@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react'
 import {Segment, Grid, Icon} from 'semantic-ui-react'
 import { Activity } from '../../../app/model/activity';
+import { format, parseISO } from 'date-fns';
 
 interface Props {
     activity: Activity
@@ -27,8 +28,14 @@ export default observer(function ActivityDetailedInfo({activity}: Props) {
                     </Grid.Column>
                     <Grid.Column width={15}>
             <span>
-              {activity.date}
-            </span>
+            {activity.date && (
+               <span>
+               {activity.date instanceof Date && !isNaN(activity.date.getTime()) 
+                 ? format(activity.date, 'dd MMM yyyy h:mm aa') 
+                 : 'Invalid Date'}
+             </span>
+             
+)}            </span>
                     </Grid.Column>
                 </Grid>
             </Segment>

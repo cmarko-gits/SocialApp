@@ -6,7 +6,7 @@ import { store, StoreContext } from './app/store/store.ts';
 import { router } from './app/router/Router.tsx';
 import { RouterProvider } from 'react-router';
 import 'react-calendar/dist/Calendar.css';
-
+import 'react-datepicker/dist/react-datepicker.css'
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <StoreContext.Provider value={store}>
