@@ -1,13 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Activity } from "../model/activity";
 import { toast } from "react-toastify";
 import { router } from "../router/Router";
 import { store } from "../store/store";
+import { User, UserFormValues } from "../model/user";
 
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
 const responseBody = <T> (response : AxiosResponse<T>) => response.data!
+
+axios.interceptors.request.use(config =>{
+    const token = store.commonStore.token
+    if(token && config.headers) config.headers.Authorization = `Bearer ${token}`
+    return config;
+})
 
 const sleep = (delay : number) =>{
     return new Promise((resorve) => {
@@ -17,7 +25,8 @@ const sleep = (delay : number) =>{
 
 const request = {
     get : <T>  (url:string) => axios.get<T>(url).then(responseBody), 
-    post :<T> (url : string ,  ) => axios.post<T>(url,body).then(responseBody) ,
+    
+    post :<T> (url : string ,body : {}) => axios.post<T>(url,body).then(responseBody) ,
     put : <T> (url:string , body : {}) => axios.put<T>(url,body).then(responseBody),
     delete :<T> (url:string) => axios.delete<T>(url).then(responseBody )
 }
@@ -73,8 +82,14 @@ const Activities = {
     delete : (id:string) => axios.delete<void>(`/Activities/${id}`)
 }
 
+const Account = {
+    current : () => request.get<User>('/api/account'),
+    register: (user: UserFormValues) => request.post<User>('/api/Account/register', user),
+    login: (user: UserFormValues) => request.post<User>('/api/Account/login', user)}
+
 const agent = {
-    Activities
+    Activities , 
+    Account
 }
 
 export default agent;

@@ -1,10 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { Button, Container, Menu } from "semantic-ui-react";
+import { Button, Container, Menu , Image, Dropdown} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import { useStore } from "../store/store";
 
 export default function Navbar() {
 
+    const {userStore : {user , logout}} = useStore()
 
     return (
         <Menu inverted fixed="top">
@@ -17,6 +19,17 @@ export default function Navbar() {
                 <Menu.Item as={NavLink} to='/errors' name="Errors" />
                 <Menu.Item>
                     <Button as={NavLink} to='/createActivity' positive content="Create Activity" /> {/* Izmenjeno */}
+                </Menu.Item>
+                <Menu.Item position="right">
+                    <Image src={user?.image || '/assets/user.png'} avatar spaced="right"/>
+                    <Dropdown  pointing='top left' text={user?.displayName}>
+                    <Dropdown.Menu>
+                        <Dropdown.Item as={Link} to={`/profile/${user?.username}` } text="My profile" icon='user'/>
+                        <Dropdown.Item onClick={logout} text="LogOut" icon="power"/>
+                
+                    </Dropdown.Menu>
+                    </Dropdown>
+               
                 </Menu.Item>
             </Container>
         </Menu>

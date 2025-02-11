@@ -7,6 +7,7 @@ import ActiviityDashboard from '../../features/activities/dashboard/ActiviityDas
 import TestErrors from '../errors/TestError';
 import NotFound from '../errors/NotFound';
 import ServerError from '../errors/ServerError';
+import LoginForm from '../../features/users/LoginForm';
 export const routes: RouteObject[] = [
     {
         path: '/',
@@ -18,6 +19,7 @@ export const routes: RouteObject[] = [
             { path: 'createActivity', element: <ActivityForm key='create' /> },
             { path: 'manage/:id', element: <ActivityForm key='manage' /> },
             { path : 'errors' , element : <TestErrors/>},
+            { path : 'login' , element : <LoginForm/>},
             { path : 'not-found' , element : <NotFound/>},
             { path : 'server-error' , element : <ServerError/>},
             { path : '*' , element : <Navigate replace to='/not-found'/>}
