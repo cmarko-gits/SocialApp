@@ -15,19 +15,21 @@ export default class UserStore{
         return !!this.user
     }
 
-    login = async (creds : UserFormValues) =>{
-
-        try{
-              const user = await (await agent.Account.login(creds))
-              store.commonStore.setToken(user.token)
-              runInAction(()=>{this.user = user})
-              router.navigate('/activities')
-              store.modalStore.closeModal()
-
-        }catch(error){
-            console.log(error)
+    login = async (creds: UserFormValues) => {
+        try {
+          const user = await agent.Account.login(creds);
+          store.commonStore.setToken(user.token);
+          runInAction(() => {
+            this.user = user;
+          });
+          router.navigate('/activities');
+          store.modalStore.closeModal();
+        } catch (error) {
+          console.log("Login error:", error);
+          throw error;
         }
-    }
+      }
+      
 
     register = async (creds : UserFormValues) =>{
 
@@ -57,5 +59,9 @@ export default class UserStore{
         }catch(error){
             console.log(error)
         }
+    }
+
+    setImage = (image:string) =>{
+        if(this.user) this.user.image = image
     }
 }

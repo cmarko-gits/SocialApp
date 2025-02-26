@@ -1,5 +1,5 @@
 import { Button, Header, Segment } from "semantic-ui-react";
-import { Activity } from "../../../app/model/activity";
+import { Activity, ActivityFormValues } from "../../../app/model/activity";
 import {  useEffect, useState } from "react";
 import { useStore } from "../../../app/store/store";
 import { observer } from "mobx-react-lite";
@@ -18,7 +18,7 @@ import { v4 as uuid } from 'uuid';
 export default observer (function ActivityForm() {
 
     const  {activityStore} = useStore()
-    const { loading , loadActivity , createActivity , updateActivity ,  loadingInitial} = activityStore
+    const {  loadActivity , createActivity , updateActivity ,  loadingInitial} = activityStore
     const {id} = useParams()
     const [activity , setActivity] = useState<Activity>
     ({
@@ -46,8 +46,8 @@ export default observer (function ActivityForm() {
 
     //const [activity, setActivity] =  useState<Activity>(initialState);
 
-    const handleForSubmit = (activity:Activity) => {
-        if(activity.id.length === 0){
+    const handleForSubmit = (activity:ActivityFormValues) => {
+        if(!activity.id){
             const newActivity = {
                 ...activity , 
                 id:uuid()
@@ -66,8 +66,8 @@ export default observer (function ActivityForm() {
     return (
         <Segment clearing>
             <Header color="teal" content="Activity Details" sub/>
-            <Formik validationSchema={validationShema} enableReinitialize initialValues={activity} onSubmit={values => handleForSubmit(values)}>
-                {({handleSubmit})=>(
+            <Formik validationSchema={validationShema} enableReinitialize initialValues={activity} onSubmit={values => handleForSubmit(values) }>
+                {({handleSubmit,isSubmitting})=>(
                 <Form onSubmit={handleSubmit} autoComplete="off" className="ui form"> {/* Ispravljeno */}
                     <MyTextInput name="title" placeholder="Title" />
                     <MyTextArea rows={3}   placeholder="Description"  name="description" />
@@ -75,7 +75,7 @@ export default observer (function ActivityForm() {
                     <MyDateInput placeholder="Date" name="date" showTimeSelect timeCaption="time" dateFormat="MMMM d , yyyy h:mm aa"/>
                     <MyTextInput   placeholder="City"  name="city" />
                     <MyTextInput   placeholder="Venue"  name="venue" />
-                    <Button loading={loading} floated="right" positive type="submit" content="Submit" /> 
+                    <Button loading={isSubmitting} floated="right" positive type="submit" content="Submit" /> 
                     <Button as={Link} to={'/activities'} floated="right" type="button" content="Cancel" /> {/* Ispravljeno */}
                 </Form>   
                 )}

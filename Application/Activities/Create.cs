@@ -1,10 +1,11 @@
-using System.Threading;
-using System.Threading.Tasks;
+
 using MediatR;
 using Domain; // Referenca na domen
 using Persistence;
 using FluentValidation;
 using Application.Core;
+using Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Activities
 {
@@ -28,24 +29,38 @@ namespace Application.Activities
         public class Handler : IRequestHandler<Command, Result<Unit>> // Očekujemo povratni tip Activity
         {
             private readonly DataContext _context;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context , IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
+
             }
 
           public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
 {
-    // Ensure that the activity has a unique ID
-    request.Activity.Id = Guid.NewGuid(); 
 
-    _context.Activities.Add(request.Activity);
+            var user = await _context.Users.FirstOrDefaultAsync(x=>x.UserName == _userAccessor.GetUsername());
 
-    var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+            var attendee = new ActivityAttendee{
+                AppUser = user,
+                Activity = request.Activity,
+                IsHost = true
+            };
 
-    if (!result) return Result<Unit>.Failure("Failed to create activity");
+            request.Activity.Attendees.Add(attendee);
+            _context.Activities.Add(request.Activity);
+            // Ensure that the activity has a unique ID
+            request.Activity.Id = Guid.NewGuid(); 
 
-    return Result<Unit>.Success(Unit.Value);
+            _context.Activities.Add(request.Activity);
+
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!result) return Result<Unit>.Failure("Failed to create activity");
+
+            return Result<Unit>.Success(Unit.Value);
 }
 
         }

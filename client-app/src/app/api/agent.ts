@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Activity } from "../model/activity";
+import { Activity, ActivityFormValues } from "../model/activity";
 import { toast } from "react-toastify";
 import { router } from "../router/Router";
 import { store } from "../store/store";
 import { User, UserFormValues } from "../model/user";
+import { Photo, Profile } from "../model/profile";
 
 
-axios.defaults.baseURL = 'http://localhost:5000'
+axios.defaults.baseURL = 'http://localhost:5000/api'
 
 const responseBody = <T> (response : AxiosResponse<T>) => response.data!
 
@@ -77,19 +78,35 @@ axios.interceptors.response.use(async response=>{
 const Activities = {
     list  : () => request.get<Activity[]>('/Activities'),
     details : (id:string) => request.get<Activity>(`/Activities/${id}`),
-    create : (activity : Activity) => axios.post<void>('/Activities',activity),
-    update : (activity:Activity) => axios.put<void>(`/Activities/${activity.id}`,activity) ,
-    delete : (id:string) => axios.delete<void>(`/Activities/${id}`)
+    create : (activity : ActivityFormValues) => axios.post<void>('/Activities',activity),
+    update : (activity:ActivityFormValues) => axios.put<void>(`/Activities/${activity.id}`,activity) ,
+    delete : (id:string) => axios.delete<void>(`/Activities/${id}`),
+    attend : (id:string) => request.post<void>(`Activities/${id}/attend` , {})
 }
 
 const Account = {
-    current : () => request.get<User>('/api/account'),
-    register: (user: UserFormValues) => request.post<User>('/api/Account/register', user),
-    login: (user: UserFormValues) => request.post<User>('/api/Account/login', user)}
+    current: () => request.get<User>('account'),
+    register: (user: UserFormValues) => request.post<User>('/Account/register', user),
+    login: (user: UserFormValues) => request.post<User>('/Account/login', user)
+  }
+  const Profiles = {
+    get : (username:string) => request.get<Profile>(`/Profiles/${username}`),
+    uploadPhoto : (file:Blob) => {
+        let formData = new FormData()
+        formData.append('File' , file)
+        return axios.post<Photo>('photos' , formData , {
+            headers : {'Content-type' : 'multipart/form-data'}
+        })
+    } , 
+    setMainPhoto: (id:string) => request.post(`/photos/${id}/setMain`, {}),
+    deletePhoto : (id:string) => request.delete(`/photos/${id}`)
+}
 
 const agent = {
     Activities , 
-    Account
+    Account ,
+    Profiles
 }
+
 
 export default agent;

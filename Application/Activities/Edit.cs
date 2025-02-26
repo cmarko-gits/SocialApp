@@ -1,58 +1,67 @@
-using System.Diagnostics;
+using Application.Core;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Domain;
-using Activity = Domain.Activity;
-using AutoMapper;
-using FluentValidation;
-using Application.Core;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Activities
 {
     public class Edit
     {
-        public class Command : IRequest<Result<Unit>>{
-            public Activity Activity;
-        }
-
-        
-        public class CommandValidator : AbstractValidator<Command>{
-
-             public CommandValidator(){
-
-                 RuleFor(x=>x.Activity).SetValidator(new ActivityValidator());
-
-             }
-
-        }
-
-        public class Handler : IRequestHandler<Command , Result<Unit>>
+        public class Command : IRequest<Result<Unit>>
         {
+            public Activity Activity { get; set; }
+        }
 
+        public class Handler : IRequestHandler<Command, Result<Unit>>
+        {
             private readonly DataContext _context;
-            private readonly IMapper _mapper; 
-
-            public Handler(DataContext context , IMapper mapper){
+            
+            public Handler(DataContext context)
+            {
                 _context = context;
-                _mapper = mapper;
             }
-
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.FindAsync(request.Activity.Id);
-        
-                if(activity == null) return null;
+                // Load the existing activity along with its attendees and their associated AppUser
+                var activity = await _context.Activities
+                    .Include(a => a.Attendees)
+                    .ThenInclude(att => att.AppUser)
+                    .SingleOrDefaultAsync(x => x.Id == request.Activity.Id, cancellationToken);
 
-                _mapper.Map(request.Activity , activity);
+                if (activity == null)
+                    return Result<Unit>.Failure("Activity not found");
 
-                var result = await _context.SaveChangesAsync() > 0;
-                if(!result) return Result<Unit>.Failure("Problem edit activity");
+                // Update scalar properties of the activity
+                activity.Title = request.Activity.Title;
+                activity.Description = request.Activity.Description;
+                activity.Category = request.Activity.Category;
+                activity.Date = new DateTime(request.Activity.Date.Ticks); // Ensure date is a DateTime object
+                activity.City = request.Activity.City;
+                activity.Venue = request.Activity.Venue;
+                activity.IsCancelled = request.Activity.IsCancelled;
 
-                return Result<Unit>.Success(Unit.Value);
+                // Iterate over attendees to ensure their primary key (AppUserId) is set
+                if (activity.Attendees != null)
+                {
+                    foreach (var attendee in activity.Attendees)
+                    {
+                        if (string.IsNullOrEmpty(attendee.AppUserId) && attendee.AppUser != null)
+                        {
+                            attendee.AppUserId = attendee.AppUser.Id;
+                        }
+                    }
+                }
+
+                var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+
+                return result
+                    ? Result<Unit>.Success(Unit.Value)
+                    : Result<Unit>.Failure("Problem updating activity");
             }
-
-          
         }
     }
 }
