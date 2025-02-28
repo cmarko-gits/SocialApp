@@ -14,13 +14,14 @@ import ActivityDetailedSlideBar from "./ActivittyDetailedSlidebar";
 export default observer (function ActivityDetails(){
 
     const {activityStore} = useStore()
-    const {selectedActivity : activity , loadActivity , loadingInitial} = activityStore
+    const {selectedActivity : activity , clearSelectedActivity, loadActivity , loadingInitial} = activityStore
     const {id} = useParams()
 
     useEffect(()=>{
         if(id) loadActivity(id)
+        return () => clearSelectedActivity()
 
-    } , [id,loadActivity])
+    } , [id,loadActivity,clearSelectedActivity])
 
     if(!activity || loadingInitial) return <LoadingComponent/>;
 
@@ -29,7 +30,7 @@ export default observer (function ActivityDetails(){
                 <Grid.Column width={10}>
                     <ActivityDetailedHeader activity={activity}/>
                     <ActivityDetailedInfo  activity={activity}  />
-                    <ActivityDetailedChat/>
+                    <ActivityDetailedChat activityId={activity.id}/>
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <ActivityDetailedSlideBar activity={activity!}/>

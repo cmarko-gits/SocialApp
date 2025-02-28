@@ -1,5 +1,6 @@
 using API.Extensions;
 using API.Middleware;
+using API.SignalR;
 using Application.Activities;
 using Application.Core;
 using Domain;
@@ -70,7 +71,7 @@ app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
+app.MapHub<ChatHub>("/chat");
 // Migration and seeding
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
