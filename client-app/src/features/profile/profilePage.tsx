@@ -9,14 +9,14 @@ import LoadingComponent from "../../app/layout/LoadingComponent";
 export default function ProfilePage(){
     const  {username} = useParams<{username:string}>()
     const {profileStore} = useStore()
-    const {loadProfile , loadingProfile , profile} = profileStore
+    const {loadProfile , loadingProfile , profile , setActiveTab} = profileStore
 
     useEffect(()=>{
-        loadProfile(username!
+        loadProfile(username!)
+        return() =>{
+            setActiveTab(0)
+        }
 
-
-        )
-        console.log("Profile data : " ,  profile)
     }, [loadProfile , username])
 
     if(loadingProfile) <LoadingComponent content="Loading profile ..."/>

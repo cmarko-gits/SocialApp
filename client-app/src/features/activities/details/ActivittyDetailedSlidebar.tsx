@@ -29,19 +29,23 @@ const ActivityDetailedSidebar = observer(function ActivityDetailedSidebar({activ
                     {
                         attendees.map(attendee => (
                             <Item style={{ position: 'relative' }} key={attendee.username}>
+
+                            {attendee.username === host?.username &&
                             <Label
                                 style={{ position: 'absolute' }}
                                 color='orange'
                                 ribbon='right'
                             >
                                 Host
-                            </Label>
+                            </Label>}
                             <Image size='tiny' src={attendee.image ||'/assets/user.png'} />
                             <Item.Content verticalAlign='middle'>
                                 <Item.Header as='h3'>
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.username}</Link>
                                 </Item.Header>
-                                <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
+
+                                {attendee.following &&
+                                <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>}
                             </Item.Content>
                         </Item>
                         ))

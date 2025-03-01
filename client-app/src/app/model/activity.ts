@@ -13,7 +13,7 @@ export interface IActivity  {
     isHost?:boolean
     isGoing?:boolean
     isCancelled?:boolean
-    attendees ?: Profile[]
+    attendees : Profile[] 
   }
 
 export class Activity implements IActivity{
@@ -41,7 +41,7 @@ export class Activity implements IActivity{
   isHost?:boolean = false
   isGoing?:boolean = false
   isCancelled?:boolean = false
-  attendees ?: Profile[]
+  attendees : Profile[] = []
 }
 
 export class ActivityFormValues{

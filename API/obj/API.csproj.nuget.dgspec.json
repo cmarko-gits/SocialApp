@@ -29,8 +29,8 @@
               "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Application\\Application.csproj": {
                 "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Application\\Application.csproj"
               },
-              "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -229,14 +229,14 @@
         }
       }
     },
-    "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\makro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\makro\\AppData\\Roaming\\NuGet\\NuGet.Config"

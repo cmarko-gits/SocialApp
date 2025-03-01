@@ -22,7 +22,7 @@ export default function ActivityListItem ({activity}:Props){
                         <Item.Content>
                             <Item.Header as={Link} to={`/Activities/${activity.id}`}>{activity.title}</Item.Header>
                             <Item.Description>
-                                Hosted by <Link to={`profiles/${activity.host?.username}`}>{activity.host?.dispalayName}</Link>
+                                Hosted by <Link to={`profiles/${activity.host?.username}`}>{activity.host?.displayName}</Link>
                             </Item.Description>
                             {activity.isHost && (
                                 <Item.Description>

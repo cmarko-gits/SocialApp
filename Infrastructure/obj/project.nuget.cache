@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "r7ZPm+qKQfc=",
+  "dgSpecHash": "z+r7bZqG15Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\makro\\OneDrive\\Desktop\\Reactivities\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\makro\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\makro\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
