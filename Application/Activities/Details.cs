@@ -12,7 +12,7 @@ using AutoMapper.QueryableExtensions;
 
 namespace Application.Activities
 {
-    public class Details
+    public class Detail
     {
         public class Query : IRequest<Result<ActivityDto>>
         {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Activity, ActivityFormValues } from "../model/activity";
@@ -6,6 +7,8 @@ import { router } from "../router/Router";
 import { store } from "../store/store";
 import { User, UserFormValues } from "../model/user";
 import { Photo, Profile } from "../model/profile";
+import { PaginationResult } from "../model/paggination";
+import { UserActivity } from "../model/userActivity";
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api'
@@ -32,9 +35,15 @@ const request = {
     delete :<T> (url:string) => axios.delete<T>(url).then(responseBody )
 }
 
-axios.interceptors.response.use(async response=>{
-   
-    await sleep(1000)
+axios.interceptors.response.use(async response => {
+    await sleep(1000);
+
+    const pagination = response.headers['pagination'];
+    if (pagination) {
+        response.data = new PaginationResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginationResult<Activity[]>>;
+    }
+
     return response;
 },(error:AxiosError)=>{
     const {data , status , config }= error.response as AxiosResponse
@@ -76,7 +85,7 @@ axios.interceptors.response.use(async response=>{
 })
 
 const Activities = {
-    list  : () => request.get<Activity[]>('/Activities'),
+    list  : (params:URLSearchParams) => axios.get<PaginationResult<Activity[]>>('/Activities',{params}).then(responseBody),
     details : (id:string) => request.get<Activity>(`/Activities/${id}`),
     create : (activity : ActivityFormValues) => axios.post<void>('/Activities',activity),
     update : (activity:ActivityFormValues) => axios.put<void>(`/Activities/${activity.id}`,activity) ,
@@ -102,7 +111,11 @@ const Account = {
     setMainPhoto: (id:string) => request.post(`/photos/${id}/setMain`, {}),
     deletePhoto : (id:string) => request.delete(`/photos/${id}`),
     updateFollowing: (username:string) => request.post(`Follow/${username}`,{}),
-    listFollowings : (username:string,predicate:string) => request.get(`Follow/${username}?predicate=${predicate}`)
+    listFollowings : (username:string,predicate:string) => request.get(`Follow/${username}?predicate=${predicate}`),
+    listActivities: (username: string, predicate: string) =>
+        request.get<UserActivity[]>(`/Profiles/${username}/activities?
+        predicate=${predicate}`)
+
 }
 
 const agent = {

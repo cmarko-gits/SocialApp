@@ -5,6 +5,8 @@ using Domain;
 using MediatR;
 using Application.Activities;
 using Microsoft.AspNetCore.Authorization;
+using Application.Core;
+using Application.Profiles;
 
 namespace API.Controllers
 {
@@ -13,16 +15,17 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult> GetActivities(CancellationToken ct){
-            return  HandleResult(await Mediator.Send(new List.Query()));
-        }
-          
+public async Task<ActionResult> GetActivities([FromQuery] ActivityParams param)
+{
+    return HandlePageResult(await Mediator.Send(new List.Query { Params = param }));
+}
+
         [Authorize(Policy = "IsActivityHost")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
 
-            return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
+            return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
         [HttpPost]
@@ -37,7 +40,7 @@ namespace API.Controllers
         public async Task<ActionResult> EditActivity(Guid id , Activity activity){
 
             activity.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command{Activity = activity}));
+            return HandleResult(await Mediator.Send(new Edits.Command{Activity = activity}));
         }
 
         [Authorize(Policy = "IsActivityHost")]

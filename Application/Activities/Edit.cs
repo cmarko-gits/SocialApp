@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Activities
 {
-    public class Edit
+    public class Edits
     {
         public class Command : IRequest<Result<Unit>>
         {
